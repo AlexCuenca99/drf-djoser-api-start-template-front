@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export function Error404() {
+export function Error404Page() {
 	useEffect(() => {
 		document.title = 'Page not found';
 	}, []);

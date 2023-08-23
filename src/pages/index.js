@@ -1,2 +1,3 @@
-export * from './Login';
-export * from './Error404';
+export * from './LoginPage';
+export * from './HomePage';
+export * from './Error404Page';
