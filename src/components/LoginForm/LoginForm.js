@@ -4,11 +4,12 @@ import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import { Button, Form } from 'semantic-ui-react';
 
-import { useUser } from 'hooks';
+import { useUser, useAuth } from 'hooks';
 import './LoginForm.scss';
 
 export function LoginForm() {
-	const { error, loading, login } = useUser();
+	const { login } = useAuth();
+	const { jwtCreate } = useUser();
 
 	const formik = useFormik({
 		validateOnBlur: true,
@@ -19,9 +20,9 @@ export function LoginForm() {
 		validationSchema: Yup.object(validationSchema()),
 		onSubmit: async (formValue) => {
 			try {
-				const response = await login(formValue);
+				const response = await jwtCreate(formValue);
 				const { access } = response;
-				console.log(access);
+				login(access);
 			} catch (error) {
 				toast.error(error.cause.detail);
 			}

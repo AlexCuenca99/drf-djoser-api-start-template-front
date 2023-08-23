@@ -1,26 +1,37 @@
 import { useState } from 'react';
-import { loginApi } from 'api/users';
+import { jwtCreateApi, getMeApi } from 'api/users';
 
 export function useUser() {
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
+	const [user, setUser] = useState(null);
 
-	const login = async (formValue) => {
+	const jwtCreate = async (formValue) => {
 		try {
 			setLoading(true);
-			const response = await loginApi(formValue);
+			const response = await jwtCreateApi(formValue);
+			setUser(response);
 			setLoading(false);
 			return response;
 		} catch (error) {
 			setLoading(false);
-			setError(error);
 			throw error;
 		}
 	};
 
+	const getMe = async (token) => {
+		try {
+			setLoading(true);
+			const response = await getMeApi(token);
+			setLoading(false);
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	};
 	return {
 		loading,
-		error,
-		login,
+		user,
+		jwtCreate,
+		getMe,
 	};
 }
